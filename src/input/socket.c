@@ -163,7 +163,8 @@ int cmdConfigure(Scene* scene, Display display)
  * 	file path plus some small variables.
  *
  * CONS:
- * - Cannot easily load embedded resources */
+ * - Cannot easily load embedded resources
+ * - May not support all file formats */
 int cmdMeshCreate(Scene* scene, Display display)
 {
 	Mesh newMesh = {};
@@ -493,8 +494,8 @@ int cmdMeshBindTexture(Scene* scene, Display display)
 	IgniRndCmdMeshBindTexture cmd;
 	recv(scene->fd, &cmd, sizeof(cmd), 0);
 
-	if (cmd.pass > IGNI_RENDER_PASS_COUNT) {
-		printf("Render pass index out of bounds\n");
+	if (cmd.target > IGNI_RENDER_TEXTURE_TARGET_COUNT) {
+		printf("Invalid texture target\n");
 		return -1;
 	};
 
@@ -519,7 +520,7 @@ int cmdMeshBindTexture(Scene* scene, Display display)
 	qCmdData.meshId = cmd.meshId;
 	qCmdData.view = scene->textures[texIdx].view;
 	qCmdData.sampler = scene->textures[texIdx].sampler;
-	qCmdData.pass = cmd.pass;
+	qCmdData.pass = cmd.target;
 	*(QCmdMeshBindTexture*)qCmd.data = qCmdData;
 
 	pushCommandToQueue(&scene->uniformCommands, qCmd);
@@ -535,7 +536,7 @@ int cmdMeshBindTexture(Scene* scene, Display display)
 	Texture* selTex = &scene->textures[texIdx];
 
 	selTex->boundMeshes[selTex->boundMeshCount] = cmd.meshId;
-	selTex->boundPasses[selTex->boundMeshCount] = cmd.pass;
+	selTex->boundPasses[selTex->boundMeshCount] = cmd.target;
 	++selTex->boundMeshCount;
 
 	if (selTex->boundMeshCount >= selTex->boundMeshLimit) {

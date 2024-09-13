@@ -148,6 +148,11 @@ int createTexture(Texture* tex, VkDevice device, VkPhysicalDevice physDev)
 		return -1;
 	}
 
+	tex->boundMeshes = malloc(sizeof(int));
+	tex->boundPasses = malloc(sizeof(int));
+	tex->boundMeshLimit = 1;
+	tex->boundMeshCount = 0;
+
 	return 0;
 }
 
@@ -258,7 +263,9 @@ void destroyScene(VkDevice device, Scene scene)
 }
 
 void destroyMesh(VkDevice device, Mesh mesh)
-{   
+{
+	vkDeviceWaitIdle(device);
+
 	vkDestroyBuffer(device, mesh.vertexBuffer, 0);
 	vkFreeMemory(device, mesh.vertexBufferMemory, 0);
 	

@@ -53,8 +53,6 @@ int executeCmd(SceneArray* scenes, Display display, unsigned int idx)
 	IgniRndOpcode opcode = IGNI_RENDER_OP_NUL;
 	int recvResult = recv(scenes->scenes[idx].fd, &opcode, sizeof(opcode), 0);
 
-	printf("opcode %i\n", opcode);
-
 	switch (opcode) {
 	case IGNI_RENDER_OP_NUL:
 		if (recvResult == -1) {
@@ -137,7 +135,7 @@ int executeCmd(SceneArray* scenes, Display display, unsigned int idx)
 
 	if (result) {
 		sceneArrayRemoveEntry(scenes, idx, display.dev.device);
-		exit(EXIT_FAILURE);
+		return -1;
 	}
 
 	return result;
@@ -723,11 +721,6 @@ int cmdTextureCreate(Scene* scene, Display display)
 	}
 
 	stbi_image_free(pixels);
-
-	newTexture.boundMeshes = malloc(sizeof(int));
-	newTexture.boundPasses = malloc(sizeof(int));
-	newTexture.boundMeshLimit = 1;
-	newTexture.boundMeshCount = 0;
 
 	/* Once the texture is successfully set up, it is ready for the scene. */
 

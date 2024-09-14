@@ -494,7 +494,7 @@ int cmdMeshBindTexture(Scene* scene, Display display)
 	IgniRndCmdMeshBindTexture cmd;
 	recv(scene->fd, &cmd, sizeof(cmd), 0);
 
-	if (cmd.target > IGNI_RENDER_TEXTURE_TARGET_COUNT) {
+	if (cmd.target > 0) {
 		printf("Invalid texture target\n");
 		return -1;
 	};

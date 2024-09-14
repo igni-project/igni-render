@@ -25,3 +25,8 @@ If you're using linux with a window manager, configuring
 with `CFLAGS=-DWINDOWED=1` in the arguments is recommended.
 3. Go to the ./src/shader subdirectory and run `compile.sh`.
 
+## Using Windowed Mode
+
+To start igni-render in windowed mode, run the `testrun` script in the
+repository root directory.
+

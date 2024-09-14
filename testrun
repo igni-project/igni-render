@@ -1,0 +1,10 @@
+#!/bin/sh
+
+export IGNI_RENDER_SRV=/run/user/$UID/igni/render0
+export IGNI_RENDER_DATA_DIR=$(realpath ./src/shader)
+
+mkdir -p /run/user/$UID/igni
+rm $IGNI_RENDER_SRV
+
+./src/igni-render
+

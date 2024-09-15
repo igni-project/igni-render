@@ -1,10 +1,11 @@
 # igni-render
 
-Combined render engine and display server.
+Renderer component of the Igni platform
 
 ## Installation
 
 ### Prerequisites
+
 * a C compiler
 * [assimp](https://www.assimp.org)
 * glslc

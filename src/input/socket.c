@@ -23,9 +23,9 @@
 
 int createSocket(const char* path)
 {
-	int fd;
+	int fd = socket(AF_UNIX, SOCK_STREAM, 0);
 
-	if (!(fd = socket(AF_UNIX, SOCK_STREAM, 0))) {
+	if (fd == -1) {
 		perror("Cannot create socket");
 		return -1;
 	}

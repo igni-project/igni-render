@@ -105,9 +105,10 @@ Mat4 matPersp(float fov, float aspect, float near, float far)
 
 void scale3d(float (*m)[4], float x, float y, float z)
 {
-	m[0][0] *= x;
-	m[1][1] *= y;
-	m[2][2] *= z;
+	m[0][0] = x;
+	m[1][1] = y;
+	m[2][2] = z;
+	m[3][3] = 1.0f;
 }
 
 void rotate3d(float (*m)[4], float x, float y, float z)
@@ -119,16 +120,16 @@ void rotate3d(float (*m)[4], float x, float y, float z)
 	const float cy = cosf(y);
 	const float cz = cosf(z);
 
-       	/*                          Rotation matrices
-	*          X matrix            Y matrix           Z matrix
-	*      | 1     0   0   |   | cy    0   sy |   | cz    -sz    0 |
-	*      | 0     cx  -sx | * | 0     1   0  | * | sz    cz     0 |
-	*      | 0     sx  cx  |   | -sy   0   cy |   | 0     0      1 |
+	/*						  Rotation matrices
+	*		  X matrix			Y matrix		   Z matrix
+	*	  | 1	 0   0   |   | cy	0   sy |   | cz	-sz	0 |
+	*	  | 0	 cx  -sx | * | 0	 1   0  | * | sz	cz	 0 |
+	*	  | 0	 sx  cx  |   | -sy   0   cy |   | 0	 0	  1 |
 	*
-	*                    Combined rotation matrix
-	*      | cz cy     sx sy cz - cx cz    cx sy cz + sx cz |
-	*    = | sz sy     sx sy sz + cx cz    cx sy xz - sx cz |
-	*      | -sy         sx cy                cx cy         |
+	*					Combined rotation matrix
+	*	  | cz cy	 sx sy cz - cx cz	cx sy cz + sx cz |
+	*	= | sz sy	 sx sy sz + cx cz	cx sy xz - sx cz |
+	*	  | -sy		 sx cy				cx cy		 |
 	*/
 
 	m[0][0] = cz * cy;
@@ -146,8 +147,9 @@ void rotate3d(float (*m)[4], float x, float y, float z)
 
 void transform3d(float (*m)[4], float x, float y, float z)
 {
-	m[0][3] = x;
-	m[1][3] = y;
-	m[2][3] = z;
+	m[3][0] = x;
+	m[3][1] = y;
+	m[3][2] = z;
+	m[3][3] = 1.0f;
 }
 

@@ -566,17 +566,16 @@ int cmdMeshTransform(Scene* scene, Display display)
 		return -1;
 	}
 
-	float transform[4][4] = FILL_MAT4(1.0f);
-	transform[3][0] = 0;
-	transform[3][1] = 0;
-	transform[3][2] = 0;
+	float transform[4][4] = FILL_MAT4(0.0f);
 
 	/* Scale, then rotate, then transform (T*R*S) 
 	 * Yeah, matrix multiplication is done in reverse. I don't know why. */
+	
+	scale3d(transform, cmd.xScale, cmd.yScale, cmd.zScale);
 	transform3d(transform, cmd.xLoc, cmd.yLoc, cmd.zLoc);
 	rotate3d(transform, cmd.xRot, cmd.yRot, cmd.zRot);
-	scale3d(transform, cmd.xScale, cmd.yScale, cmd.zScale);
-	
+
+
 	for (int i = 0; i < MAX_FRAMES_IN_FLIGHT; i++) {
 		memcpy(
 			scene->meshes[meshIdx].uboMapped[i],

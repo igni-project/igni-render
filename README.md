@@ -9,7 +9,7 @@ Renderer component of the Igni platform
 * a C compiler
 * [assimp](https://www.assimp.org)
 * glslc
-* libigni
+* [libigni](https://github.com/igni-project/libigni)
 * libdrm
 * [make](https://www.gnu.org/software/make)
 * [vulkan](https://www.vulkan.org)

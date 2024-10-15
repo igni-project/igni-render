@@ -53,6 +53,8 @@ int executeCmd(SceneArray* scenes, Display display, unsigned int idx)
 	IgniRndOpcode opcode = IGNI_RENDER_OP_NUL;
 	int recvResult = recv(scenes->scenes[idx].fd, &opcode, sizeof(opcode), 0);
 
+	printf ("op %i\n", opcode);
+
 	switch (opcode) {
 	case IGNI_RENDER_OP_NUL:
 		if (recvResult == -1) {
@@ -134,6 +136,7 @@ int executeCmd(SceneArray* scenes, Display display, unsigned int idx)
 	}
 
 	if (result) {
+		printf("scene close %i\n", idx);
 		sceneArrayRemoveEntry(scenes, idx, display.dev.device);
 		return -1;
 	}
@@ -183,7 +186,7 @@ int cmdMeshCreate(Scene* scene, Display display)
 	free(path);
 
 	if (!impScene) {
-		printf("Failed to import mesh file. Make sure file exists.\n");
+		printf("Failed to import mesh (%s). Make sure file exists.\n", path);
 		return -1;
 	}
 

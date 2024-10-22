@@ -53,8 +53,6 @@ int executeCmd(SceneArray* scenes, Display display, unsigned int idx)
 	IgniRndOpcode opcode = IGNI_RENDER_OP_NUL;
 	int recvResult = recv(scenes->scenes[idx].fd, &opcode, sizeof(opcode), 0);
 
-	printf ("op %i\n", opcode);
-
 	switch (opcode) {
 	case IGNI_RENDER_OP_NUL:
 		if (recvResult == -1) {
@@ -470,11 +468,19 @@ int cmdMeshCreate(Scene* scene, Display display)
 		scene->meshes = (Mesh*)realloc( 
 			scene->meshes, 
 			sizeof(Mesh) * scene->meshLimit 
-		); 
+		);
+		if (!scene->meshes)  {
+			perror("realloc(meshes) in cmdMeshCreate() failed");
+			return -1;
+		}
 		scene->meshIds = (int*)realloc( 
 			scene->meshIds, 
 			sizeof(int) * scene->meshLimit 
 		); 
+		if (!scene->meshes)  {
+			perror("realloc(meshIds) in cmdMeshCreate() failed");
+			return -1;
+		}
 	}
 
 	scene->meshes[scene->meshCount] = newMesh;

@@ -35,16 +35,20 @@ int sceneArrayRemoveEntry(SceneArray* scenes, unsigned int idx, VkDevice device)
 		(scenes->sceneCount - idx) * sizeof(Scene)
 	);
 
+	printf("memcpy\n");
 	/* Allocate less space if too much is allocated */
-	while (scenes->sceneCount < scenes->sceneLimit / 2) {
+	/* sceneLimit is broken for no apparent reason */
+/*	while (scenes->sceneCount < scenes->sceneLimit / 2) {
 		scenes->sceneLimit /= 2;
 		scenes->scenes = (Scene*)
-			realloc(scenes->scenes, sizeof(Scene) * scenes->sceneLimit);
+			realloc(scenes->scenes, scenes->sceneCount);
 		if (!scenes->scenes) {
-			perror("Failed to reallocate scenes");
+			perror("realloc() in sceneArrayRemoveEntry() failed");
 			return -1;
 		}
-	}
+	}*/
+
+	printf("removed scene array entry \n");
 
 	return 0;
 }
@@ -55,9 +59,9 @@ int sceneArrayAddEntry(SceneArray* scenes, Scene scene)
 	while (scenes->sceneCount >= scenes->sceneLimit) {
 		scenes->sceneLimit *= 2;
 		scenes->scenes = (Scene*)
-			realloc(scenes->scenes, sizeof(Scene) * scenes->sceneLimit);
+			realloc(scenes->scenes, scenes->sceneLimit);
 		if (!scenes->scenes) {
-			perror("Failed to reallocate scenes");
+			perror("realloc() in sceneArrayAddEntry() failed");
 			return -1;
 		}
 	}

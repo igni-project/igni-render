@@ -109,7 +109,7 @@ typedef struct
 {
 	Scene* scenes;
 	unsigned int sceneCount;
-	unsigned int sceneLimit;
+	int sceneLimit;
 } SceneArray;
 
 int createSceneArray(SceneArray* scenes);

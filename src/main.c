@@ -35,6 +35,7 @@ int main(int argc, char* argv[], char* envp[])
 			exit(EXIT_FAILURE);
 		}
 
+		printf("Execute %s\n", argv[i]);
 		if (execve(argv[i], 0, envp) == -1) {
 			printf("Failed to execute ");
 			perror(argv[i]);
@@ -135,6 +136,6 @@ int main(int argc, char* argv[], char* envp[])
 	destroyRenderPasses(display);
 	destroyDisplay(display);
 
-	return 1;
+	return 0;
 }
 
